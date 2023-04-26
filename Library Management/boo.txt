@@ -1,0 +1,171 @@
+/*
+file: main.cpp
+*/
+
+#include <iostream>
+#include <string>
+#include <stdio.h>
+#include<stdlib.h>
+#include <fstream>
+
+
+using namespace std;
+class book
+{
+private:
+	string id, bookName ;
+
+
+
+public:
+
+	void addBook(fstream& f) {
+		cout << "\nEnter Id : "; cin >> id;
+		cout << "Enter Book Name : "; cin >> bookName;
+
+	}
+	void writeBook(fstream& f)
+	{
+		f << id << "|";
+		f << bookName ;
+		f << "\n";
+		f.close();
+	}
+
+	void listOfAllBooks(fstream& f) {
+
+		while (getline(f, id, '|'))
+		{
+			getline(f, bookName, '|');
+			cout << "\nID:" << id;
+			cout << "\tName:" << bookName;
+
+		}
+
+	}
+	void bookSearch(fstream& f, int Pid)
+	{
+		bool flage = false;
+		while (getline(f, id, '|'))
+		{
+			getline(f, bookName, '|');
+			
+			if (Pid == atoi(id.c_str()))
+			{
+				cout << "\nID:" << id;
+				cout << "\tBook Name:" << bookName;
+				
+				flage = true;
+				break;
+			}
+		}
+		if (flage == false)
+			cout << "\n Book not found !";
+	}
+};
+
+//int deleteBook() {
+//
+//
+//}
+//
+//int updateBook() {
+//
+//
+//}
+
+
+//
+//int borrowBook() {
+//
+//
+//}
+//
+//int returnBook() {
+//
+//}
+
+
+
+/* run this program using the console pauser or add your own getch,
+   system("pause") or input loop */
+
+int main() {
+	fstream File; book b; int id;
+
+	int outerChoice = 0;
+	while (outerChoice != 9) {
+		system("cls");
+		cout << "\n Library Management Version 1.0 \n\n";
+		cout << "\n1. Amin";
+		cout << "\n2. User";
+		cout << "\n9. Exit";
+		cout << "\n\nEnter your choice : ";
+		cin >> outerChoice;
+
+		if (outerChoice == 1)
+		{
+			system("cls");
+
+			int innerChoice = 0;
+			while (innerChoice != 9) {
+				cout << "\n\n Admin Login is Successful !! Press any key to continue..";
+				cout << "\n1. Add Book";
+				cout << "\n2. Search";
+				cout << "\n3. Delete Book";
+				cout << "\n4. List of All Books";
+				cout << "\n9. Exit";
+				cout << "\n\n Enter your choice : ";
+				cin >> innerChoice;
+				switch (innerChoice) {
+				case 1: File.open("books.txt", ios::app);  b.addBook(File);  b.writeBook(File);  break; File.close();
+
+				case 2: {
+					cout << "enter the person's id you want to search for ";
+					cin >> id;
+					File.open("students.txt", ios::in); b.bookSearch(File, id); File.close(); break;
+				}
+					  //case 3: deleteBook(); break;
+
+				case 4: File.open("books.txt", ios::in);  b.listOfAllBooks(File); File.close();  break;
+
+				default: cout << "\n\n Invalid Choice. Press any key to continue..";
+
+				}
+				File.close();
+				//system("cls");
+			}
+
+		}
+
+
+		else if (outerChoice == 2) {
+			int innerChoice = 0;
+			while (innerChoice != 9) {
+				system("cls");
+				cout << "\n1. Borrow a Book";
+				cout << "\n2. Return a Book";
+				cout << "\n3. List of All Books";
+				cout << "\n9. Exit";
+				cout << "\n\n Enter your choice : ";
+				cin >> innerChoice;
+
+				switch (innerChoice) {
+					//case 1: borrowBook(); break;
+					//case 2: returnBook(); break;
+				case 3: File.open("books.txt", ios::in);  b.listOfAllBooks(File); File.close();  break;
+					//case 9: break;
+					//default: cout << "\n\n Error: Invalid Choice. Press any key to continue..";
+					//	
+					//}
+
+				}
+			}
+				system("cls");
+
+
+		}
+
+		return 0;
+	}
+}
